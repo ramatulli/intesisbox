@@ -1,0 +1,50 @@
+Manifest-Version: 1.0
+Bundle-Description: This project contains the official add-ons of open
+ HAB
+Automatic-Module-Name: org.openhab.binding.intesisbox
+Bundle-License: "Eclipse Public License 2.0";link="https://www.eclipse
+ .org/legal/epl-2.0/"
+Bundle-SymbolicName: org.openhab.binding.intesisbox
+Built-By: Rocky
+Bnd-LastModified: 1583074977266
+Bundle-ManifestVersion: 2
+Bundle-DocURL: https://github.com/openhab/infrastructure/org.openhab.a
+ ddons.reactor/org.openhab.addons.reactor.bundles/org.openhab.binding.
+ intesisbox
+Bundle-Vendor: openHAB.org
+Import-Package: org.eclipse.smarthome.core.library.types,org.eclipse.s
+ marthome.core.library.unit,org.eclipse.smarthome.core.thing,org.eclip
+ se.smarthome.core.thing.binding,org.eclipse.smarthome.core.thing.type
+ ,org.eclipse.smarthome.core.types,javax.measure;version="[1.0,2)",org
+ .slf4j;version="[1.7,2)"
+Require-Capability: osgi.service;filter:="(objectClass=org.openhab.bin
+ ding.intesisbox.internal.IntesisBoxStateDescriptionProvider)";effecti
+ ve:=active,osgi.extender;filter:="(&(osgi.extender=osgi.component)(ve
+ rsion>=1.4.0)(!(version>=2.0.0)))",osgi.ee;filter:="(&(osgi.ee=JavaSE
+ )(version=1.8))"
+Service-Component: OSGI-INF/org.openhab.binding.intesisbox.internal.In
+ tesisBoxHandlerFactory.xml,OSGI-INF/org.openhab.binding.intesisbox.in
+ ternal.IntesisBoxStateDescriptionProvider.xml
+Bundle-Developers: openhab;email="info@openhab.org";name=openHAB;organ
+ ization=openHAB;organizationUrl="https://www.openHAB.org"
+Tool: Bnd-4.3.0.201909301554
+Provide-Capability: osgi.service;objectClass:List<String>="org.eclipse
+ .smarthome.core.thing.binding.ThingHandlerFactory";uses:="org.eclipse
+ .smarthome.core.thing.binding",osgi.service;objectClass:List<String>=
+ "org.eclipse.smarthome.core.thing.type.DynamicStateDescriptionProvide
+ r,org.openhab.binding.intesisbox.internal.IntesisBoxStateDescriptionP
+ rovider";uses:="org.eclipse.smarthome.core.thing.type,org.openhab.bin
+ ding.intesisbox.internal"
+Bundle-Name: openHAB Add-ons :: Bundles :: IntesisBox Binding
+Bundle-Version: 2.5.1.202003011502
+Bundle-SCM: url="https://github.com/openhab/openhab-addons/org.openhab
+ .addons.reactor.bundles/org.openhab.binding.intesisbox",connection="s
+ cm:git:https://github.com/openhab/openhab-addons.git/org.openhab.addo
+ ns.reactor.bundles/org.openhab.binding.intesisbox",developer-connecti
+ on="scm:git:https://github.com/openhab/openhab-addons.git/org.openhab
+ .addons.reactor.bundles/org.openhab.binding.intesisbox",tag=HEAD
+Private-Package: ESH-INF.binding,ESH-INF.i18n,ESH-INF.thing,org.openha
+ b.binding.intesisbox.internal
+Build-Jdk: 1.8.0_212
+Created-By: 1.8.0_212 (Oracle Corporation)
+

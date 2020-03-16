@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -57,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * sent to one of the channels.
  *
  * @author Cody Cutrer - Initial contribution
- * @author Rocky Amatulli - additions to include id message handling, dynamic channel options based on limits.
+ * @author Rocky Amatulli - additions to include id message handling, dynamic channel state options based on limits.
  *
  */
 @NonNullByDefault
@@ -239,6 +240,7 @@ public class IntesisBoxHandler extends BaseThingHandler {
                         if (limits.size() == 2) {
                             minTemp = limits.get(0);
                             maxTemp = limits.get(1);
+                            updateChannelStateLimits(channelId);
                         }
 
                     } else {
@@ -272,7 +274,16 @@ public class IntesisBoxHandler extends BaseThingHandler {
             }
             stateDescriptionProvider.setStateOptions(new ChannelUID(getThing().getUID(), channelId), options);
         }
-        // }
+
+    }
+
+    private void updateChannelStateLimits(String channelId) {
+        Map<String, BigDecimal> limits = new HashMap<>();
+        limits.put("min", new BigDecimal(minTemp));
+        limits.put("max", new BigDecimal(maxTemp));
+        stateDescriptionProvider.setStateLimits(new ChannelUID(getThing().getUID(), channelId), limits);
+
+        logger.debug("updateChannelStateLimits: Channel '{}' min '{}' .. max '{}'", channelId, minTemp, maxTemp);
     }
 
     private void sendAlive() {

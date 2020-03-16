@@ -1,5 +1,6 @@
 package org.openhab.binding.intesisbox.internal;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,31 +27,42 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = { DynamicStateDescriptionProvider.class, IntesisBoxStateDescriptionProvider.class })
 @NonNullByDefault
 public class IntesisBoxStateDescriptionProvider implements DynamicStateDescriptionProvider {
-    private final Map<ChannelUID, @Nullable List<StateOption>> channelOptionsMap = new ConcurrentHashMap<>();
+    private final Map<ChannelUID, @Nullable List<StateOption>> channelStateOptionsMap = new ConcurrentHashMap<>();
+    private final Map<ChannelUID, @Nullable Map<String, BigDecimal>> channelStateLimitsMap = new ConcurrentHashMap<>();
 
     public void setStateOptions(ChannelUID channelUID, List<StateOption> options) {
-        channelOptionsMap.put(channelUID, options);
+        channelStateOptionsMap.put(channelUID, options);
+    }
+
+    public void setStateLimits(ChannelUID channelUID, Map<String, BigDecimal> limits) {
+        channelStateLimitsMap.put(channelUID, limits);
     }
 
     @Override
     public @Nullable StateDescription getStateDescription(Channel channel, @Nullable StateDescription original,
             @Nullable Locale locale) {
 
-        List<StateOption> options = channelOptionsMap.get(channel.getUID());
-
-        if (options == null) {
-            return null;
-        }
+        List<StateOption> options = channelStateOptionsMap.get(channel.getUID());
+        Map<String, BigDecimal> limits = channelStateLimitsMap.get(channel.getUID());
 
         StateDescriptionFragmentBuilder builder = (original == null) ? StateDescriptionFragmentBuilder.create()
                 : StateDescriptionFragmentBuilder.create(original);
 
-        return builder.withOptions(options).build().toStateDescription();
+        if (limits != null) {
+            builder.withMinimum(limits.get("min"));
+            builder.withMaximum(limits.get("max"));
+        }
+        if (options != null) {
+            builder.withOptions(options);
+        }
+        return builder.build().toStateDescription();
+
     }
 
     @Deactivate
     public void deactivate() {
-        channelOptionsMap.clear();
+        channelStateOptionsMap.clear();
+        channelStateLimitsMap.clear();
     }
 
 }

@@ -3,7 +3,7 @@
 This binding connects to WiFi [IntesisBox](http://www.intesisbox.com/) devices, speaking an ASCII protocol.
 It does _not_ support [IntesisHome](http://www.intesishome.com/) devices. This binding has only been tested against a FJ-RC-WMP-1 IntesisBox.
 
-[update 29-Feb-2020]
+[update 16-Mar-2020]
 
 Binding tested against IntesisBox model FJ-AC-WMP-1 connected to a Fujitsu AUTGxxKRLA. Some further enhancement made to the binding include
 - addition of the IntesisBox ID command which returns details about the intesisbox device itself (rather than the connected AC unit) 
